@@ -14,4 +14,9 @@ public class HRSConfig {
     @Config.LangKey("config.hrsmod.hide_gui")
     @Config.Comment("Hide GUI during screenshot")
     public static boolean hideGUI = true;
+
+    @Config.LangKey("config.hrsmod.warmup_frames")
+    @Config.Comment("Warm-up frames to render before saving. Helps shaders stabilize exposure.")
+    @Config.RangeInt(min = 0, max = 100)
+    public static int warmupFrames = 10;
 }

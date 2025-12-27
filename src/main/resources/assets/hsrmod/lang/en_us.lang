@@ -10,3 +10,6 @@ config.hrsmod.multiplier.tooltip=The resolution scale factor.\nExample: 4 means 
 
 config.hrsmod.hide_gui=Hide GUI
 config.hrsmod.hide_gui.tooltip=Whether to hide the HUD, chat, and crosshair during capture.\nRecommended: True.
+
+config.hrsmod.warmup_frames=Warm-up Frames
+config.hrsmod.warmup_frames.tooltip=Number of empty frames rendered before saving.\nAllows shaders to adjust auto-exposure.\nIncrease this if screenshots look dark (Recommended: 10-20).

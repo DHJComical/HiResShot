@@ -10,3 +10,6 @@ config.hrsmod.multiplier.tooltip=设置截图的分辨率倍数。\n例如: 4 �
 
 config.hrsmod.hide_gui=隐藏 GUI
 config.hrsmod.hide_gui.tooltip=截图时是否自动隐藏快捷栏、聊天框和准星。\n推荐开启以获得纯净画面。
+
+config.hrsmod.warmup_frames=预热帧数
+config.hrsmod.warmup_frames.tooltip=在保存截图前强制渲染的空帧数量。\n用于让光影的自动曝光适应高分辨率。\n如果截图发黑或曝光不足，请调大此数值 (推荐 10-20)。
