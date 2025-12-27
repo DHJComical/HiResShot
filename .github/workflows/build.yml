@@ -29,6 +29,8 @@ jobs:
       name: Set up Gradle
     - name: Add permission
       run: chmod +x ./gradlew
+    - name: Execute Gradle build
+      run: ./gradlew build
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v5
