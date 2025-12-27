@@ -16,3 +16,12 @@ config.hiresshot.warmup_frames.tooltip=在保存截图前强制渲染的空帧�
 
 config.hiresshot.realtime_mode=实时渲染模式
 config.hiresshot.realtime_mode.tooltip=开启: 游戏在截图分辨率下继续运行几秒 (兼容光影)。\n关闭: 瞬间冻结画面并渲染 (速度快)。
+
+config.hiresshot.use_custom_res=使用自定义分辨率
+config.hiresshot.use_custom_res.tooltip=开启后，将忽略“截图倍数”，强制使用下方设置的宽度和高度。
+
+config.hiresshot.custom_width=自定义宽度 (px)
+config.hiresshot.custom_width.tooltip=目标截图的宽度像素值 (例如 4K 为 3840)。
+
+config.hiresshot.custom_height=自定义高度 (px)
+config.hiresshot.custom_height.tooltip=目标截图的高度像素值 (例如 4K 为 2160)。

@@ -16,3 +16,12 @@ config.hiresshot.warmup_frames.tooltip=Number of empty frames rendered before sa
 
 config.hiresshot.realtime_mode=Real-time Mode
 config.hiresshot.realtime_mode.tooltip=True: Game runs at high-res for a few seconds (Best for Shaders).\nFalse: Freezes game to render instantly (Faster).
+
+config.hiresshot.use_custom_res=Use Custom Resolution
+config.hiresshot.use_custom_res.tooltip=If enabled, overrides the multiplier with the specific Width/Height below.
+
+config.hiresshot.custom_width=Custom Width (px)
+config.hiresshot.custom_width.tooltip=Target width in pixels (e.g., 3840).
+
+config.hiresshot.custom_height=Custom Height (px)
+config.hiresshot.custom_height.tooltip=Target height in pixels (e.g., 2160).

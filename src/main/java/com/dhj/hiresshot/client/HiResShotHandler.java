@@ -1,9 +1,9 @@
 package com.dhj.hiresshot.client;
 
 import com.dhj.hiresshot.HRSConfig;
+import com.dhj.hiresshot.Tags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ScreenShotHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class HiResShotHandler {
 
-    private static final Logger LOGGER = LogManager.getLogger("HiResShot");
+    private static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
     private static boolean isCapturing = false;
     private static int framesToWait = 0;
@@ -42,20 +42,31 @@ public class HiResShotHandler {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        int scaleFactor = HRSConfig.multiplier;
         int configWarmup = HRSConfig.warmupFrames;
         boolean useRealTime = HRSConfig.realTimeMode;
+        boolean useCustomRes = HRSConfig.useCustomResolution;
 
         if (!OpenGlHelper.isFramebufferEnabled()) {
             mc.player.sendMessage(new TextComponentString("§cError: Framebuffer disabled!"));
             return;
         }
 
+        int tW, tH;
+        String modeInfo;
+        if (useCustomRes) {
+            tW = HRSConfig.customWidth;
+            tH = HRSConfig.customHeight;
+            modeInfo = "Custom: " + tW + "x" + tH;
+        } else {
+            int scaleFactor = HRSConfig.multiplier;
+            tW = mc.displayWidth * scaleFactor;
+            tH = mc.displayHeight * scaleFactor;
+            modeInfo = "Multiplier: x" + scaleFactor + " (" + tW + "x" + tH + ")";
+        }
+
         int maxTexSize = GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE);
-        int tW = mc.displayWidth * scaleFactor;
-        int tH = mc.displayHeight * scaleFactor;
         if (tW > maxTexSize || tH > maxTexSize) {
-            mc.player.sendMessage(new TextComponentString("§cError: Too big! Max GPU size: " + maxTexSize));
+            mc.player.sendMessage(new TextComponentString("§cError: Size " + tW + "x" + tH + " > GPU Max " + maxTexSize));
             return;
         }
 
@@ -69,27 +80,64 @@ public class HiResShotHandler {
             if (HRSConfig.hideGUI) {
                 mc.gameSettings.hideGUI = true;
             }
-            mc.displayWidth = targetWidth;
-            mc.displayHeight = targetHeight;
-            resizeFramebuffer(mc, targetWidth, targetHeight);
+            applyResolution(mc, targetWidth, targetHeight);
             if (useRealTime) {
                 isCapturing = true;
                 framesToWait = Math.max(5, configWarmup);
-                mc.player.sendMessage(new TextComponentString("§eStabilizing Shaders (" + framesToWait + " frames)..."));
+                mc.player.sendMessage(new TextComponentString("§eCapturing [" + modeInfo + "]... Please wait."));
             } else {
-                mc.player.sendMessage(new TextComponentString("§eInstant Capture (x" + scaleFactor + ")..."));
+                mc.player.sendMessage(new TextComponentString("§eInstant Capture [" + modeInfo + "]..."));
                 for (int i = 0; i < configWarmup; i++) {
                     mc.getFramebuffer().bindFramebuffer(true);
-                    mc.entityRenderer.updateCameraAndRender(1.0f, System.nanoTime() + (long) i * 1000000);
+                    mc.entityRenderer.updateCameraAndRender(1.0f, System.nanoTime() + (long)i * 1000000);
                 }
                 doSaveScreenshot(mc);
                 restoreState(mc);
             }
+
+        } catch (OutOfMemoryError e) {
+            handleOOM(mc, e);
         } catch (Exception e) {
-            LOGGER.error("Capture start failed", e);
+            LOGGER.error("Start failed", e);
             restoreState(mc);
             mc.player.sendMessage(new TextComponentString("§cError: " + e.getMessage()));
         }
+    }
+
+    @SubscribeEvent
+    public void onRenderTick(TickEvent.RenderTickEvent event) {
+        if (event.phase != TickEvent.Phase.END || !isCapturing) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.displayWidth != targetWidth || mc.displayHeight != targetHeight) {
+            applyResolution(mc, targetWidth, targetHeight);
+        }
+        if (framesToWait > 0) {
+            framesToWait--;
+            return;
+        }
+        try {
+            doSaveScreenshot(mc);
+        } catch (OutOfMemoryError e) {
+            handleOOM(mc, e);
+        } catch (Exception e) {
+            LOGGER.error("Save failed", e);
+            restoreState(mc);
+            mc.player.sendMessage(new TextComponentString("§cError: " + e.getMessage()));
+        } finally {
+            if (mc.displayWidth == targetWidth) {
+                restoreState(mc);
+                isCapturing = false;
+            }
+        }
+    }
+
+    private static void handleOOM(Minecraft mc, OutOfMemoryError e) {
+        LOGGER.error("Out of Memory during capture!", e);
+        restoreState(mc);
+        isCapturing = false;
+        mc.player.sendMessage(new TextComponentString("§cError: Out of Memory! The resolution is too high."));
+        mc.player.sendMessage(new TextComponentString("§cTry reducing the Multiplier or Custom Resolution."));
+        System.gc();
     }
 
     private static void doSaveScreenshot(Minecraft mc) {
@@ -103,47 +151,27 @@ public class HiResShotHandler {
             String customFileName = dateStr + "_hrs.png";
             ITextComponent msg = ScreenShotHelper.saveScreenshot(gameDir, customFileName, targetWidth, targetHeight, mc.getFramebuffer());
             LOGGER.info("Saved: " + customFileName);
-            mc.player.sendMessage(msg);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    private static void applyResolution(Minecraft mc, int width, int height) {
+        mc.displayWidth = width;
+        mc.displayHeight = height;
+        if (mc.getFramebuffer().framebufferWidth != width || mc.getFramebuffer().framebufferHeight != height) {
+            if (mc.getFramebuffer() != null) {
+                mc.getFramebuffer().createBindFramebuffer(width, height);
+            }
+            mc.entityRenderer.onResourceManagerReload(mc.getResourceManager());
+        }
+    }
+
     private static void restoreState(Minecraft mc) {
-        mc.displayWidth = originalWidth;
-        mc.displayHeight = originalHeight;
-        resizeFramebuffer(mc, originalWidth, originalHeight);
+        applyResolution(mc, originalWidth, originalHeight);
         if (HRSConfig.hideGUI) {
             mc.gameSettings.hideGUI = originalHideGUI;
         }
-    }
-
-    private static void resizeFramebuffer(Minecraft mc, int width, int height) {
-        Framebuffer fb = mc.getFramebuffer();
-        if (fb != null) {
-            fb.createBindFramebuffer(width, height);
-        }
-        mc.entityRenderer.onResourceManagerReload(mc.getResourceManager());
-    }
-
-    @SubscribeEvent
-    public void onRenderTick(TickEvent.RenderTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || !isCapturing) {
-            return;
-        }
-        Minecraft mc = Minecraft.getMinecraft();
-        if (framesToWait > 0) {
-            framesToWait--;
-            return;
-        }
-        try {
-            doSaveScreenshot(mc);
-        } catch (Exception e) {
-            LOGGER.error("Capture save failed", e);
-            mc.player.sendMessage(new TextComponentString("§cError: " + e.getMessage()));
-        } finally {
-            restoreState(mc);
-            isCapturing = false;
-        }
+        mc.player.sendMessage(new TextComponentString("§aScreenshot Saved!"));
     }
 }

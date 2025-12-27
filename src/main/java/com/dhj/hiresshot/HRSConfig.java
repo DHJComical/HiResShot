@@ -23,4 +23,18 @@ public class HRSConfig {
     @Config.LangKey("config.hiresshot.realtime_mode")
     @Config.Comment("True = Real-time (Wait in-game, Best for Shaders); False = Frozen (Instant, Faster)")
     public static boolean realTimeMode = false;
+
+    @Config.LangKey("config.hiresshot.use_custom_res")
+    @Config.Comment("If True, uses the Custom Width/Height defined below instead of the Multiplier.")
+    public static boolean useCustomResolution = false;
+
+    @Config.LangKey("config.hiresshot.custom_width")
+    @Config.Comment("Custom Width in pixels (e.g., 3840 for 4K)")
+    @Config.RangeInt(min = 100, max = 32000)
+    public static int customWidth = 3840;
+
+    @Config.LangKey("config.hiresshot.custom_height")
+    @Config.Comment("Custom Height in pixels (e.g., 2160 for 4K)")
+    @Config.RangeInt(min = 100, max = 32000)
+    public static int customHeight = 2160;
 }
