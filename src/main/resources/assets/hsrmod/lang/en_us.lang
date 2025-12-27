@@ -13,3 +13,6 @@ config.hrsmod.hide_gui.tooltip=Whether to hide the HUD, chat, and crosshair duri
 
 config.hrsmod.warmup_frames=Warm-up Frames
 config.hrsmod.warmup_frames.tooltip=Number of empty frames rendered before saving.\nAllows shaders to adjust auto-exposure.\nIncrease this if screenshots look dark (Recommended: 10-20).
+
+config.hrsmod.realtime_mode=Real-time Mode
+config.hrsmod.realtime_mode.tooltip=True: Game runs at high-res for a few seconds (Best for Shaders).\nFalse: Freezes game to render instantly (Faster).
