@@ -1,4 +1,4 @@
-package com.dhj.hrsmod.client;
+package com.dhj.hiresshot.client;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;

@@ -1,6 +1,6 @@
-package com.dhj.hrsmod;
+package com.dhj.hiresshot;
 
-import com.dhj.hrsmod.client.KeyHandler;
+import com.dhj.hiresshot.client.KeyHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import org.apache.logging.log4j.LogManager;

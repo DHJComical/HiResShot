@@ -1,4 +1,4 @@
-package com.dhj.hrsmod;
+package com.dhj.hiresshot;
 
 import net.minecraftforge.common.config.Config;
 

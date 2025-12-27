@@ -1,6 +1,6 @@
-package com.dhj.hrsmod.client;
+package com.dhj.hiresshot.client;
 
-import com.dhj.hrsmod.Tags;
+import com.dhj.hiresshot.Tags;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;

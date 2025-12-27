@@ -1,6 +1,6 @@
-package com.dhj.hrsmod.client;
+package com.dhj.hiresshot.client;
 
-import com.dhj.hrsmod.HRSConfig;
+import com.dhj.hiresshot.HRSConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.shader.Framebuffer;
