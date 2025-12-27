@@ -1,0 +1,12 @@
+# General
+key.hrsmod.capture=High-Res Capture
+key.categories.hrsmod=HiResShot
+
+# Config GUI
+config.hrsmod.title=HRS Config
+
+config.hrsmod.multiplier=Multiplier
+config.hrsmod.multiplier.tooltip=The resolution scale factor.\nExample: 4 means 4x width and 4x height.\nRange: 2 - 32.
+
+config.hrsmod.hide_gui=Hide GUI
+config.hrsmod.hide_gui.tooltip=Whether to hide the HUD, chat, and crosshair during capture.\nRecommended: True.

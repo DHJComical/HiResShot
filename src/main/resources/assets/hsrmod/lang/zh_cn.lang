@@ -1,0 +1,12 @@
+# 创造模式物品栏等其他翻译
+key.hrsmod.capture=高清截图 (F9)
+key.categories.hrsmod=HiResShot
+
+# 配置文件 GUI 翻译
+config.hrsmod.title=高清截图配置
+
+config.hrsmod.multiplier=截图倍数
+config.hrsmod.multiplier.tooltip=设置截图的分辨率倍数。\n例如: 4 代表长宽各放大 4 倍 (16 倍像素量)。\n范围: 2 - 32。
+
+config.hrsmod.hide_gui=隐藏 GUI
+config.hrsmod.hide_gui.tooltip=截图时是否自动隐藏快捷栏、聊天框和准星。\n推荐开启以获得纯净画面。
