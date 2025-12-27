@@ -22,5 +22,5 @@ public class HRSConfig {
 
     @Config.LangKey("config.hrsmod.realtime_mode")
     @Config.Comment("True = Real-time (Wait in-game, Best for Shaders); False = Frozen (Instant, Faster)")
-    public static boolean realTimeMode = true;
+    public static boolean realTimeMode = false;
 }
