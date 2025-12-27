@@ -4,9 +4,11 @@ import com.dhj.hiresshot.HRSConfig;
 import com.dhj.hiresshot.Tags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ScreenShotHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -25,6 +27,8 @@ public class HiResShotHandler {
     private static boolean isCapturing = false;
     private static int framesToWait = 0;
     private static boolean registered = false;
+
+    private static boolean isHidingPlayer = false;
 
     private static int originalWidth;
     private static int originalHeight;
@@ -80,7 +84,13 @@ public class HiResShotHandler {
             if (HRSConfig.hideGUI) {
                 mc.gameSettings.hideGUI = true;
             }
+
+            if (HRSConfig.hidePlayer) {
+                isHidingPlayer = true;
+            }
+
             applyResolution(mc, targetWidth, targetHeight);
+
             if (useRealTime) {
                 isCapturing = true;
                 framesToWait = Math.max(5, configWarmup);
@@ -101,6 +111,15 @@ public class HiResShotHandler {
             LOGGER.error("Start failed", e);
             restoreState(mc);
             mc.player.sendMessage(new TextComponentString("§cError: " + e.getMessage()));
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
+        if (isHidingPlayer) {
+            if (event.getEntityPlayer().equals(Minecraft.getMinecraft().player)) {
+                event.setCanceled(true);
+            }
         }
     }
 
@@ -132,11 +151,10 @@ public class HiResShotHandler {
     }
 
     private static void handleOOM(Minecraft mc, OutOfMemoryError e) {
-        LOGGER.error("Out of Memory during capture!", e);
+        LOGGER.error("Out of Memory!", e);
         restoreState(mc);
         isCapturing = false;
-        mc.player.sendMessage(new TextComponentString("§cError: Out of Memory! The resolution is too high."));
-        mc.player.sendMessage(new TextComponentString("§cTry reducing the Multiplier or Custom Resolution."));
+        mc.player.sendMessage(new TextComponentString("§cError: Out of Memory! Reduce resolution."));
         System.gc();
     }
 
@@ -161,10 +179,14 @@ public class HiResShotHandler {
         mc.displayHeight = height;
         if (mc.getFramebuffer().framebufferWidth != width || mc.getFramebuffer().framebufferHeight != height) {
             if (mc.getFramebuffer() != null) {
-                mc.getFramebuffer().createBindFramebuffer(width, height);
+                fbResize(mc.getFramebuffer(), width, height);
             }
             mc.entityRenderer.onResourceManagerReload(mc.getResourceManager());
         }
+    }
+
+    private static void fbResize(Framebuffer fb, int width, int height) {
+        fb.createBindFramebuffer(width, height);
     }
 
     private static void restoreState(Minecraft mc) {
@@ -172,6 +194,7 @@ public class HiResShotHandler {
         if (HRSConfig.hideGUI) {
             mc.gameSettings.hideGUI = originalHideGUI;
         }
+        isHidingPlayer = false;
         mc.player.sendMessage(new TextComponentString("§aScreenshot Saved!"));
     }
 }

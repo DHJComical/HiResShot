@@ -25,3 +25,6 @@ config.hiresshot.custom_width.tooltip=目标截图的宽度像素值 (例如 4K 
 
 config.hiresshot.custom_height=自定义高度 (px)
 config.hiresshot.custom_height.tooltip=目标截图的高度像素值 (例如 4K 为 2160)。
+
+config.hiresshot.hide_player=隐藏玩家实体
+config.hiresshot.hide_player.tooltip=截图时完全不渲染玩家模型。\n这可以防止光影下出现自己的阴影，或者在第三人称时挡住画面。

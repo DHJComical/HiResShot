@@ -25,3 +25,6 @@ config.hiresshot.custom_width.tooltip=Target width in pixels (e.g., 3840).
 
 config.hiresshot.custom_height=Custom Height (px)
 config.hiresshot.custom_height.tooltip=Target height in pixels (e.g., 2160).
+
+config.hiresshot.hide_player=Hide Player Entity
+config.hiresshot.hide_player.tooltip=Prevents the player model from rendering.\nUseful to avoid self-shadows when using shaders.

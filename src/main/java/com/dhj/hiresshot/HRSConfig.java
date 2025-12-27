@@ -37,4 +37,8 @@ public class HRSConfig {
     @Config.Comment("Custom Height in pixels (e.g., 2160 for 4K)")
     @Config.RangeInt(min = 100, max = 32000)
     public static int customHeight = 2160;
+
+    @Config.LangKey("config.hiresshot.hide_player")
+    @Config.Comment("Hide player model to prevent self-shadows")
+    public static boolean hidePlayer = true;
 }
