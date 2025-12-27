@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
 public class KeyHandler {
-    public static final KeyBinding KEY_CAPTURE = new KeyBinding("key.hrsmod.capture", Keyboard.KEY_F9, "key.categories.hrsmod");
+    public static final KeyBinding KEY_CAPTURE = new KeyBinding("key.hiresshot.capture", Keyboard.KEY_F9, "key.categories.hiresshot");
 
     public static void register() {
         ClientRegistry.registerKeyBinding(KEY_CAPTURE);
