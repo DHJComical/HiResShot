@@ -45,7 +45,7 @@ public class HRSConfig {
 
             realTimeMode = builder
                     .comment("True = Real-time (Wait in-game); False = Frozen (Instant)")
-                    .define("realTimeMode", true);
+                    .define("realTimeMode", false);
 
             useCustomResolution = builder
                     .comment("Use Custom Resolution instead of Multiplier")
