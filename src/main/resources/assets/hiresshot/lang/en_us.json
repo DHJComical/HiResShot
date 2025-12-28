@@ -1,0 +1,30 @@
+{
+  "key.categories.hiresshot": "HiResShot",
+  "key.hiresshot.capture": "Capture High-Res Image",
+
+  "config.hiresshot.title": "HiResShot Configuration",
+
+  "config.hiresshot.multiplier": "Multiplier",
+  "config.hiresshot.multiplier.tooltip": "Scale factor based on window size.\nRange: 2 - 32.\n(Only used when 'Use Custom Resolution' is OFF)",
+
+  "config.hiresshot.hideGui": "Hide GUI",
+  "config.hiresshot.hideGui.tooltip": "Whether to hide HUD, chat, and crosshair during capture.",
+
+  "config.hiresshot.hidePlayer": "Hide Player Entity",
+  "config.hiresshot.hidePlayer.tooltip": "Prevents the player model from rendering.\nUseful to avoid self-shadows when using shaders.",
+
+  "config.hiresshot.warmupFrames": "Warm-up Frames",
+  "config.hiresshot.warmupFrames.tooltip": "Frames to render before saving.\nHigher values allow shaders (Auto-Exposure/TAA) to stabilize.",
+
+  "config.hiresshot.realTimeMode": "Real-time Mode",
+  "config.hiresshot.realTimeMode.tooltip": "True: Game continues running at high-res (Best for Shaders).\nFalse: Freezes game to render instantly (Faster).",
+
+  "config.hiresshot.useCustomResolution": "Use Custom Resolution",
+  "config.hiresshot.useCustomResolution.tooltip": "If enabled, overrides the multiplier with the specific Width/Height below.",
+
+  "config.hiresshot.customWidth": "Custom Width (px)",
+  "config.hiresshot.customWidth.tooltip": "Target width in pixels (e.g., 3840 for 4K).",
+
+  "config.hiresshot.customHeight": "Custom Height (px)",
+  "config.hiresshot.customHeight.tooltip": "Target height in pixels (e.g., 2160 for 4K)."
+}
