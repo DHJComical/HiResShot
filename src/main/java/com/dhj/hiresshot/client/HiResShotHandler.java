@@ -12,10 +12,12 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -202,10 +204,28 @@ public class HiResShotHandler {
     private void restoreState(Minecraft mc) {
         isCapturing = false;
         resize(mc, originalFbWidth, originalFbHeight);
+        RenderSystem.viewport(0, 0, originalFbWidth, originalFbHeight);
+        mc.getMainRenderTarget().bindWrite(true);
+        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
+        tryReloadShaders();
         if (HRSConfig.CLIENT.hideGui.get()) {
             mc.options.hideGui = originalHideGui;
         }
         isHidingPlayer = false;
+    }
+
+    private void tryReloadShaders() {
+        try {
+            Class<?> irisClass = Class.forName("net.irisshaders.iris.Iris");
+            Method reloadMethod = irisClass.getMethod("reload");
+            reloadMethod.invoke(null);
+            LOGGER.info("Successfully reloaded Oculus/Iris shaders via reflection.");
+
+        } catch (ClassNotFoundException e) {
+            LOGGER.debug("Oculus/Iris not found, skipping shader reload.");
+        } catch (Exception e) {
+            LOGGER.warn("Failed to reload shaders via reflection: " + e.getMessage());
+        }
     }
 
     private void handleOOM(Minecraft mc, OutOfMemoryError e) {
