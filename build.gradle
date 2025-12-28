@@ -148,14 +148,14 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     modImplementation "curse.maven:configured-457570:5180900"
     modImplementation "curse.maven:embeddium-908741:5681725"
-    modImplementation "curse.maven:mekalus-oculus-fork-with-fixed-mekanism-mekasuit-1130957:6994299"
+    modImplementation "curse.maven:oculus-581495:6020952"
 }
 
 // Uncomment the lines below if you wish to configure mixin. The mixin file should be named modid.mixins.json.
 
 mixin {
-    add sourceSets.main, "mixins.${mod_id}.refmap.json"
-    config "mixins.${mod_id}.json"
+    add sourceSets.main, "${mod_id}.mixins.refmap.json"
+    config "${mod_id}.mixins.json"
 }
 
 dependencies {
