@@ -5,7 +5,7 @@
   "config.hiresshot.title": "HiResShot Configuration",
 
   "config.hiresshot.multiplier": "Multiplier",
-  "config.hiresshot.multiplier.tooltip": "Scale factor based on window size.\nRange: 2 - 32.\n(Only used when 'Use Custom Resolution' is OFF)",
+  "config.hiresshot.multiplier.tooltip": "Scale factor based on window size.\nRange: 2 - 64.\n(Only used when 'Use Custom Resolution' is OFF)",
 
   "config.hiresshot.hideGui": "Hide GUI",
   "config.hiresshot.hideGui.tooltip": "Whether to hide HUD, chat, and crosshair during capture.",
@@ -14,10 +14,13 @@
   "config.hiresshot.hidePlayer.tooltip": "Prevents the player model from rendering.\nUseful to avoid self-shadows when using shaders.",
 
   "config.hiresshot.warmupFrames": "Warm-up Frames",
-  "config.hiresshot.warmupFrames.tooltip": "Frames to render before saving.\nHigher values allow shaders (Auto-Exposure/TAA) to stabilize.",
+  "config.hiresshot.warmupFrames.tooltip": "Frames to render before saving.\nUsed in 'Instant' and 'CPU Upscale' modes to stabilize shaders.",
 
-  "config.hiresshot.realTimeMode": "Real-time Mode",
-  "config.hiresshot.realTimeMode.tooltip": "True: Game continues running at high-res (Best for Shaders).\nFalse: Freezes game to render instantly (Faster).",
+  "config.hiresshot.captureMode": "Capture Mode",
+  "config.hiresshot.captureMode.tooltip": "Select how the screenshot is processed.",
+  "config.hiresshot.captureMode.REAL_TIME": "Real-Time (Best for Shaders)",
+  "config.hiresshot.captureMode.INSTANT": "Instant (Fast)",
+  "config.hiresshot.captureMode.CPU_UPSCALE": "CPU Upscale (Limitless)",
 
   "config.hiresshot.useCustomResolution": "Use Custom Resolution",
   "config.hiresshot.useCustomResolution.tooltip": "If enabled, overrides the multiplier with the specific Width/Height below.",
@@ -26,5 +29,8 @@
   "config.hiresshot.customWidth.tooltip": "Target width in pixels (e.g., 3840 for 4K).",
 
   "config.hiresshot.customHeight": "Custom Height (px)",
-  "config.hiresshot.customHeight.tooltip": "Target height in pixels (e.g., 2160 for 4K)."
+  "config.hiresshot.customHeight.tooltip": "Target height in pixels (e.g., 2160 for 4K).",
+
+  "config.hiresshot.cpuUpscaleLimitGpu": "Limit GPU Render Size",
+  "config.hiresshot.cpuUpscaleLimitGpu.tooltip": "Only used in CPU Upscale Mode.\nTrue: Limits GPU rendering to 16K (16384px) to save VRAM. CPU handles the rest.\nFalse: Tries to render full size on GPU (Risky if > 16K)."
 }

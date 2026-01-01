@@ -5,7 +5,7 @@
   "config.hiresshot.title": "HiResShot 配置",
 
   "config.hiresshot.multiplier": "截图倍数",
-  "config.hiresshot.multiplier.tooltip": "基于当前窗口大小的放大倍数。\n范围: 2 - 32。\n(仅在“使用自定义分辨率”关闭时生效)",
+  "config.hiresshot.multiplier.tooltip": "基于当前窗口大小的放大倍数。\n范围: 2 - 64。\n(仅在“使用自定义分辨率”关闭时生效)",
 
   "config.hiresshot.hideGui": "隐藏 GUI",
   "config.hiresshot.hideGui.tooltip": "截图时是否自动隐藏快捷栏、聊天框和准星。",
@@ -14,10 +14,13 @@
   "config.hiresshot.hidePlayer.tooltip": "截图时完全不渲染玩家模型。\n防止光影下出现玩家自身的阴影，或第一人称手部遮挡。",
 
   "config.hiresshot.warmupFrames": "预热帧数",
-  "config.hiresshot.warmupFrames.tooltip": "在保存前强制渲染的帧数。\n数值越高，光影的自动曝光越稳定 (推荐 20-40)。",
+  "config.hiresshot.warmupFrames.tooltip": "在保存前强制渲染的帧数。\n仅在“瞬间模式”和“CPU 放大模式”下生效。\n用于让光影缓存数据，数值越高光影越稳定。",
 
-  "config.hiresshot.realTimeMode": "实时渲染模式",
-  "config.hiresshot.realTimeMode.tooltip": "开启: 游戏在 8K 分辨率下继续运行几秒 (兼容光影，会有卡顿感)。\n关闭: 瞬间冻结画面并渲染 (速度快，不支持依赖时间的光影)。",
+  "config.hiresshot.captureMode": "截图模式",
+  "config.hiresshot.captureMode.tooltip": "选择截图的处理逻辑。",
+  "config.hiresshot.captureMode.REAL_TIME": "实时模式 (推荐光影)",
+  "config.hiresshot.captureMode.INSTANT": "瞬间模式 (速度快)",
+  "config.hiresshot.captureMode.CPU_UPSCALE": "CPU 放大 (突破限制)",
 
   "config.hiresshot.useCustomResolution": "使用自定义分辨率",
   "config.hiresshot.useCustomResolution.tooltip": "开启后，将忽略“截图倍数”，强制使用下方设置的宽度和高度。",
@@ -26,5 +29,8 @@
   "config.hiresshot.customWidth.tooltip": "目标截图的宽度像素值 (例如 4K 为 3840)。",
 
   "config.hiresshot.customHeight": "自定义高度 (px)",
-  "config.hiresshot.customHeight.tooltip": "目标截图的高度像素值 (例如 4K 为 2160)。"
+  "config.hiresshot.customHeight.tooltip": "目标截图的高度像素值 (例如 4K 为 2160)。",
+
+  "config.hiresshot.cpuUpscaleLimitGpu": "限制 GPU 渲染尺寸",
+  "config.hiresshot.cpuUpscaleLimitGpu.tooltip": "仅在 CPU 放大模式下生效。\n开启: 强制 GPU 最大渲染 16K (16384px)，剩余倍数由 CPU 计算。防止显存溢出。\n关闭: 尝试让 GPU 渲染完整尺寸 (若目标大于 16K 可能导致崩溃)。"
 }
