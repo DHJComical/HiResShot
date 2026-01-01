@@ -77,6 +77,13 @@ public class ConfigScreen {
                 .setSaveConsumer(HRSConfig.CLIENT.customHeight::set)
                 .build());
 
+        general.addEntry(entryBuilder.startIntField(Component.translatable("config.hiresshot.realtimeDelay"), HRSConfig.CLIENT.realtimeDelay.get())
+                .setDefaultValue(20)
+                .setMin(1).setMax(600)
+                .setTooltip(Component.translatable("config.hiresshot.realtimeDelay.tooltip"))
+                .setSaveConsumer(HRSConfig.CLIENT.realtimeDelay::set)
+                .build());
+
         builder.setSavingRunnable(HRSConfig.CLIENT_SPEC::save);
 
         return builder.build();

@@ -1,6 +1,7 @@
 package com.dhj.hiresshot.client.capture;
 
 import com.dhj.hiresshot.HRSConfig;
+import com.dhj.hiresshot.mixin.LevelRendererAccessor;
 import com.dhj.hiresshot.mixin.WindowAccessor;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.NativeImage;
@@ -13,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,17 +45,11 @@ public abstract class AbstractCaptureMode {
 
     protected void restoreState() {
         active = false;
-
-        // Dirty Resize
         resize(state.originalWidth - 1, state.originalHeight);
         resize(state.originalWidth, state.originalHeight);
-
         RenderSystem.viewport(0, 0, state.originalWidth, state.originalHeight);
         mc.getMainRenderTarget().bindWrite(true);
         RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
-
-        tryReloadShaders();
-
         if (HRSConfig.CLIENT.hideGui.get()) {
             mc.options.hideGui = state.originalHideGui;
         }
@@ -79,7 +73,25 @@ public abstract class AbstractCaptureMode {
             mainTarget.resize(width, height, Minecraft.ON_OSX);
         }
 
-        mc.levelRenderer.resize(width, height);
+        LevelRendererAccessor lvl = (LevelRendererAccessor) mc.levelRenderer;
+
+        if (lvl.getEntityEffect() != null) {
+            lvl.getEntityEffect().resize(width, height);
+        }
+
+        if (lvl.getEntityTarget() != null) {
+            lvl.getEntityTarget().resize(width, height, Minecraft.ON_OSX);
+        }
+
+        if (lvl.getTranslucentTarget() != null) {
+            lvl.getTranslucentTarget().resize(width, height, Minecraft.ON_OSX);
+        }
+
+        if (lvl.getParticlesTarget() != null) lvl.getParticlesTarget().resize(width, height, Minecraft.ON_OSX);
+        if (lvl.getWeatherTarget() != null) lvl.getWeatherTarget().resize(width, height, Minecraft.ON_OSX);
+        if (lvl.getCloudsTarget() != null) lvl.getCloudsTarget().resize(width, height, Minecraft.ON_OSX);
+        if (lvl.getItemEntityTarget() != null) lvl.getItemEntityTarget().resize(width, height, Minecraft.ON_OSX);
+
         mc.gameRenderer.resize(width, height);
     }
 
@@ -128,16 +140,5 @@ public abstract class AbstractCaptureMode {
             mc.player.sendSystemMessage(Component.literal("§cError: Out of Memory! Reduce resolution."));
         }
         System.gc();
-    }
-
-    private void tryReloadShaders() {
-        try {
-            Class<?> irisClass = Class.forName("net.irisshaders.iris.Iris");
-            Method reloadMethod = irisClass.getMethod("reload");
-            reloadMethod.invoke(null);
-        } catch (ClassNotFoundException ignored) {
-        } catch (Exception e) {
-            LOGGER.warn("Failed to reload shaders: {}", e.getMessage());
-        }
     }
 }

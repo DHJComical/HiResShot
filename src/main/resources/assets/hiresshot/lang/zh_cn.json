@@ -13,8 +13,11 @@
   "config.hiresshot.hidePlayer": "隐藏玩家实体",
   "config.hiresshot.hidePlayer.tooltip": "截图时完全不渲染玩家模型。\n防止光影下出现玩家自身的阴影，或第一人称手部遮挡。",
 
-  "config.hiresshot.warmupFrames": "预热帧数",
-  "config.hiresshot.warmupFrames.tooltip": "在保存前强制渲染的帧数。\n仅在“瞬间模式”和“CPU 放大模式”下生效。\n用于让光影缓存数据，数值越高光影越稳定。",
+  "config.hiresshot.warmupFrames": "瞬间模式预热帧",
+  "config.hiresshot.warmupFrames.tooltip": "在保存前强制渲染的帧数。\n仅在“瞬间模式”和“CPU 放大模式”下生效。",
+
+  "config.hiresshot.realtimeDelay": "实时模式延迟 (帧)",
+  "config.hiresshot.realtimeDelay.tooltip": "在实时模式下，切换分辨率后等待多少帧再保存。\n给光影模组更多时间来适应新分辨率 (推荐 20-60)。",
 
   "config.hiresshot.captureMode": "截图模式",
   "config.hiresshot.captureMode.tooltip": "选择截图的处理逻辑。",

@@ -24,6 +24,7 @@ public class HRSConfig {
         public final ModConfigSpec.IntValue customWidth;
         public final ModConfigSpec.IntValue customHeight;
         public final ModConfigSpec.BooleanValue cpuUpscaleLimitGpu;
+        public final ModConfigSpec.IntValue realtimeDelay;
 
         public Client(ModConfigSpec.Builder builder) {
             builder.push("general");
@@ -44,9 +45,14 @@ public class HRSConfig {
                     .define("hidePlayer", true);
 
             warmupFrames = builder
-                    .comment("Warm-up frames")
+                    .comment("Warm-up frames for Instant/CPU Mode")
                     .translation("config.hiresshot.warmupFrames")
                     .defineInRange("warmupFrames", 10, 0, 100);
+
+            realtimeDelay = builder
+                    .comment("Seconds to wait in Real-time Mode before saving (Allows shaders to stabilize)")
+                    .translation("config.hiresshot.realtimeDelay")
+                    .defineInRange("realtimeDelay", 3, 1, 60);
 
             captureMode = builder
                     .comment("Capture Mode")

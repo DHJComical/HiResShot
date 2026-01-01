@@ -30,7 +30,10 @@ public class HiResShotHandler {
 
         int scaleFactor = HRSConfig.CLIENT.multiplier.get();
         boolean useCustomRes = HRSConfig.CLIENT.useCustomResolution.get();
-        int configWarmup = HRSConfig.CLIENT.warmupFrames.get();
+
+        int instantWarmup = HRSConfig.CLIENT.warmupFrames.get();
+        int realtimeDelay = HRSConfig.CLIENT.realtimeDelay.get();
+
         boolean hidePlayer = HRSConfig.CLIENT.hidePlayer.get();
         CaptureMode mode = HRSConfig.CLIENT.captureMode.get();
 
@@ -56,16 +59,26 @@ public class HiResShotHandler {
 
         CaptureState state = new CaptureState(mc, tW, tH, hidePlayer);
 
+        int framesToPass = 0;
+
         switch (mode) {
-            case REAL_TIME -> currentMode = new RealTimeCaptureMode(mc, state);
-            case INSTANT -> currentMode = new InstantCaptureMode(mc, state);
-            case CPU_UPSCALE -> currentMode = new CpuUpscaleCaptureMode(mc, state);
+            case REAL_TIME -> {
+                currentMode = new RealTimeCaptureMode(mc, state);
+                framesToPass = realtimeDelay;
+            }
+            case INSTANT -> {
+                currentMode = new InstantCaptureMode(mc, state);
+                framesToPass = instantWarmup;
+            }
+            case CPU_UPSCALE -> {
+                currentMode = new CpuUpscaleCaptureMode(mc, state);
+                framesToPass = instantWarmup;
+            }
         }
 
-        currentMode.start(configWarmup);
+        currentMode.start(framesToPass);
     }
 
-    // 【重要变化】使用 RenderFrameEvent.Post 替代 TickEvent
     @SubscribeEvent
     public void onRenderFrame(RenderFrameEvent.Post event) {
         if (currentMode != null) {

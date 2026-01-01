@@ -2,7 +2,7 @@
   "key.categories.hiresshot": "HiResShot",
   "key.hiresshot.capture": "Capture High-Res Image",
 
-  "config.hiresshot.title": "HiResShot Configuration",
+  "config.hiresshot.title": "HiResShot Config",
 
   "config.hiresshot.multiplier": "Multiplier",
   "config.hiresshot.multiplier.tooltip": "Scale factor based on window size.\nRange: 2 - 64.\n(Only used when 'Use Custom Resolution' is OFF)",
@@ -13,8 +13,11 @@
   "config.hiresshot.hidePlayer": "Hide Player Entity",
   "config.hiresshot.hidePlayer.tooltip": "Prevents the player model from rendering.\nUseful to avoid self-shadows when using shaders.",
 
-  "config.hiresshot.warmupFrames": "Warm-up Frames",
-  "config.hiresshot.warmupFrames.tooltip": "Frames to render before saving.\nUsed in 'Instant' and 'CPU Upscale' modes to stabilize shaders.",
+  "config.hiresshot.warmupFrames": "Instant Warm-up Frames",
+  "config.hiresshot.warmupFrames.tooltip": "Frames to render before saving (Instant/CPU mode).",
+
+  "config.hiresshot.realtimeDelay": "Real-time Delay (Frames)",
+  "config.hiresshot.realtimeDelay.tooltip": "Frames to wait in-game before saving.\nAllows shaders to stabilize (Rec: 20-60).",
 
   "config.hiresshot.captureMode": "Capture Mode",
   "config.hiresshot.captureMode.tooltip": "Select how the screenshot is processed.",

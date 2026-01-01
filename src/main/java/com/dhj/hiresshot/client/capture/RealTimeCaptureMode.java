@@ -13,11 +13,11 @@ public class RealTimeCaptureMode extends AbstractCaptureMode {
     }
 
     @Override
-    public void start(int warmupFrames) {
-        this.framesToWait = 1;
+    public void start(int delayFrames) {
+        this.framesToWait = Math.max(1, delayFrames);
         try {
             if (mc.player != null) {
-                mc.player.sendSystemMessage(Component.literal("§eCapturing..."));
+                mc.player.sendSystemMessage(Component.literal("§eCapturing... Waiting " + framesToWait + " frames."));
             }
             applyResolution();
         } catch (OutOfMemoryError e) {

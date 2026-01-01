@@ -136,6 +136,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     implementation "me.shedaniel.cloth:cloth-config-neoforge:15.0.140"
+    implementation "curse.maven:sodium-394468:6382651"
+    implementation "curse.maven:irisshaders-455508:6661598"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
