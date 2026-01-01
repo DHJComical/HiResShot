@@ -1,26 +1,59 @@
-# ForgeDevEnv
-A modified version of [TemplateDevEnv](https://github.com/CleanroomMC/TemplateDevEnv), containing spotless, lombok, ConfigAnyTime and some extra things.
+# HiResShot
 
-If you hate spotless, refer to [this commit](https://github.com/RuiXuqi/ForgeDevEnv/commit/d48bd8777297872b630b9480729d2a109b5b5d2d) to remove it.
+![Logo](src/main/resources/assets/hiresshot/icon.png)
 
-## TemplateDevEnv
-_For Kotlin see [TemplateDevEnvKt](https://github.com/CleanroomMC/TemplateDevEnvKt)_
+**HiResShot** 是一个 Minecraft 截图增强模组，允许玩家截取远超当前屏幕分辨率的图片（如 4K、8K 甚至更高）。
 
-Template workspace for modding Minecraft 1.12.2. Licensed under MIT, it is made for public use.
+它通过调整 Framebuffer（帧缓冲区）大小来实现原生的高分辨率渲染，而非简单的像素拉伸。该模组旨在解决普通截图分辨率不足的问题，非常适合用于制作壁纸、海报或印刷品。
 
-This template runs on **Java 25**, **Gradle 9.2.1** + **[RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 2.0.2** + **Forge 14.23.5.2847**.
+支持版本：**1.12.2 (Forge)** / **1.20.1 (Forge/NeoForge)** / **1.21.1 (NeoForge)**
 
-With **coremod and mixin support** that is easy to configure.
+---
 
-### Instructions:
+## 主要功能 | Features
 
-1. Click `use this template` at the top.
-2. Clone the repository that you have created with this template to your local machine.
-3. Make sure IDEA is using Java 25 for Gradle before you sync the project. Verify this by going to IDEA's `Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JVM`.
-4. Open the project folder in IDEA. When prompted, click "Load Gradle Project" as it detects the `build.gradle`, if you weren't prompted, right-click the project's `build.gradle` in IDEA, select `Link Gradle Project`, after completion, hit `Refresh All` in the gradle tab on the right.
-5. Run gradle tasks such as `runClient` and `runServer` in the IDEA gradle tab, or use the auto-imported run configurations like `1. Run Client`.
+*   **极高分辨率**：支持最高 64 倍于屏幕分辨率的截图（受显卡显存限制）。
+*   **光影兼容**：专为光影包（Shaders）优化的“实时模式”，解决截图变黑或曝光不足的问题。
+*   **突破硬件限制**：提供“CPU 混合放大模式”，即使显卡显存不足，也能通过算法合成超大分辨率图片（如 16K+）。
+*   **自定义尺寸**：支持设置固定的宽度和高度（例如 21:9 超宽屏或手机竖屏壁纸）。
+*   **自动清理**：截图时自动隐藏 GUI（界面）、准星以及玩家实体（防止自身阴影遮挡）。
 
-### Notes:
-- Dependencies script in [gradle/scripts/dependencies.gradle](gradle/scripts/dependencies.gradle), explanations are commented in the file.
-- Publishing script in [gradle/scripts/publishing.gradle](gradle/scripts/publishing.gradle).
-- When writing Mixins on IntelliJ, it is advisable to use latest [MinecraftDev Fork for RetroFuturaGradle](https://github.com/eigenraven/MinecraftDev/releases).
+## 截图模式 | Capture Modes
+
+本模组提供三种截图模式，以适应不同的需求和硬件条件：
+
+### 1. 实时模式 (Real-time Mode) —— **推荐**
+*   **适用场景**：开启光影（Shaders）、TAA 抗锯齿或动态模糊时。
+*   **原理**：将游戏分辨率调整为目标大小，并继续运行指定帧数（可配置），等待光影渲染管线稳定后再保存。
+*   **特点**：兼容性最好，所见即所得。截图过程中游戏会短暂卡顿。
+
+### 2. 瞬间模式 (Instant Mode)
+*   **适用场景**：原版画质、无复杂光影。
+*   **原理**：瞬间冻结画面，在后台强制渲染多帧并保存。
+*   **特点**：速度快，干扰小。
+
+### 3. CPU 放大模式 (CPU Upscale Mode)
+*   **适用场景**：目标分辨率极高（如 32K），超出了显卡承受范围。
+*   **原理**：先以显卡允许的最大尺寸（如 16K）渲染底图，再利用 CPU 进行高质量双三次插值（Bicubic Interpolation）放大到目标尺寸。
+*   **特点**：可以生成任意大小的图片，防止显存溢出导致的游戏崩溃。
+
+## 使用方法 | Usage
+
+1.  在游戏中按 **F9** 键（默认）触发截图。
+2.  截图文件将保存在 `.minecraft/screenshots/` 目录下，文件名带有 `_hrs` 后缀。
+3.  **配置**：
+    *   **1.12.2**：点击 Mods -> HiResShot -> Config。
+    *   **1.20.1+**：需要安装 **Cloth Config API**，点击 Mods 列表中的配置按钮即可打开图形化界面。
+
+## 配置项详解 | Configuration
+
+*   **Multiplier**: 放大倍数（2x - 64x）。
+*   **Use Custom Resolution**: 是否启用自定义分辨率（覆盖倍数设置）。
+*   **Capture Mode**: 选择上述三种模式之一。
+*   **Real-time Delay**: 实时模式下的等待帧数。如果截图偏暗或光影未加载完成，请调大此数值（推荐 20-60）。
+*   **Hide Player**: 是否隐藏玩家模型（防止光影下产生多余阴影）。
+*   **Hide GUI**: 是否隐藏GUI（包括第一人称状态下的手部）。
+
+## 安装依赖 | Requirements
+
+*   **1.20.1 / 1.21.1**: 需要 [Cloth Config API](https://www.curseforge.com/minecraft/mc-mods/cloth-config) 以显示配置界面。
