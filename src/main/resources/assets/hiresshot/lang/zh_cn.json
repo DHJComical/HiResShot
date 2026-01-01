@@ -31,6 +31,9 @@
   "config.hiresshot.customHeight": "自定义高度 (px)",
   "config.hiresshot.customHeight.tooltip": "目标截图的高度像素值 (例如 4K 为 2160)。",
 
+  "config.hiresshot.realtimeDelay": "实时模式延迟 (帧)",
+  "config.hiresshot.realtimeDelay.tooltip": "在实时模式下，切换分辨率后等待多少帧再保存。\n给光影模组更多时间来适应新分辨率 (推荐 20-60)。",
+
   "config.hiresshot.cpuUpscaleLimitGpu": "限制 GPU 渲染尺寸",
   "config.hiresshot.cpuUpscaleLimitGpu.tooltip": "仅在 CPU 放大模式下生效。\n开启: 强制 GPU 最大渲染 16K (16384px)，剩余倍数由 CPU 计算。防止显存溢出。\n关闭: 尝试让 GPU 渲染完整尺寸 (若目标大于 16K 可能导致崩溃)。"
 }

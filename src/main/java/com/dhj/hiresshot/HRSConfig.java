@@ -19,6 +19,7 @@ public class HRSConfig {
         public final ForgeConfigSpec.BooleanValue hideGui;
         public final ForgeConfigSpec.BooleanValue hidePlayer;
         public final ForgeConfigSpec.IntValue warmupFrames;
+        public final ForgeConfigSpec.IntValue realtimeDelay;
         public final ForgeConfigSpec.EnumValue<CaptureMode> captureMode;
         public final ForgeConfigSpec.BooleanValue useCustomResolution;
         public final ForgeConfigSpec.IntValue customWidth;
@@ -29,24 +30,29 @@ public class HRSConfig {
             builder.push("general");
 
             multiplier = builder
-                    .comment("Resolution Multiplier")
+                    .comment("Resolution Multiplier (Range: 2-64)")
                     .translation("config.hiresshot.multiplier")
                     .defineInRange("multiplier", 4, 2, 64);
 
             hideGui = builder
-                    .comment("Hide GUI")
+                    .comment("Hide GUI during screenshot")
                     .translation("config.hiresshot.hideGui")
                     .define("hideGui", true);
 
             hidePlayer = builder
-                    .comment("Hide Player")
+                    .comment("Hide player model")
                     .translation("config.hiresshot.hidePlayer")
                     .define("hidePlayer", true);
 
             warmupFrames = builder
-                    .comment("Warm-up frames")
+                    .comment("Warm-up frames for Instant/CPU Mode")
                     .translation("config.hiresshot.warmupFrames")
                     .defineInRange("warmupFrames", 10, 0, 100);
+
+            realtimeDelay = builder
+                    .comment("Frames to wait in Real-time Mode (Allows shaders to stabilize)")
+                    .translation("config.hiresshot.realtimeDelay")
+                    .defineInRange("realtimeDelay", 20, 1, 600);
 
             captureMode = builder
                     .comment("Capture Mode")
@@ -69,7 +75,7 @@ public class HRSConfig {
                     .defineInRange("customHeight", 2160, 100, 64000);
 
             cpuUpscaleLimitGpu = builder
-                    .comment("Limit GPU size in CPU Mode")
+                    .comment("Limit GPU render size in CPU mode to 16K")
                     .translation("config.hiresshot.cpuUpscaleLimitGpu")
                     .define("cpuUpscaleLimitGpu", true);
 

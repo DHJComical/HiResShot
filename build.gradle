@@ -146,9 +146,9 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    modImplementation "curse.maven:configured-457570:5180900"
     modImplementation "curse.maven:embeddium-908741:5681725"
     modImplementation "curse.maven:oculus-581495:6020952"
+    modImplementation "curse.maven:cloth-config-348521:5729105"
 }
 
 // Uncomment the lines below if you wish to configure mixin. The mixin file should be named modid.mixins.json.

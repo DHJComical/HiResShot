@@ -31,6 +31,9 @@
   "config.hiresshot.customHeight": "Custom Height (px)",
   "config.hiresshot.customHeight.tooltip": "Target height in pixels (e.g., 2160 for 4K).",
 
+  "config.hiresshot.realtimeDelay": "Real-time Delay (Frames)",
+  "config.hiresshot.realtimeDelay.tooltip": "Frames to wait in Real-time Mode before saving.\nAllows shaders (Auto-Exposure/TAA) to stabilize (Rec: 20-60).",
+
   "config.hiresshot.cpuUpscaleLimitGpu": "Limit GPU Render Size",
   "config.hiresshot.cpuUpscaleLimitGpu.tooltip": "Only used in CPU Upscale Mode.\nTrue: Limits GPU rendering to 16K (16384px) to save VRAM. CPU handles the rest.\nFalse: Tries to render full size on GPU (Risky if > 16K)."
 }

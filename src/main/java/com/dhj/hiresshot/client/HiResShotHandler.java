@@ -26,12 +26,12 @@ public class HiResShotHandler {
         if (currentMode != null && currentMode.isActive()) return;
 
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null) return;
-        if (mc.getMainRenderTarget() == null) return;
+        if (mc.player == null || mc.getMainRenderTarget() == null) return;
 
         int scaleFactor = HRSConfig.CLIENT.multiplier.get();
         boolean useCustomRes = HRSConfig.CLIENT.useCustomResolution.get();
-        int configWarmup = HRSConfig.CLIENT.warmupFrames.get();
+        int instantWarmup = HRSConfig.CLIENT.warmupFrames.get();
+        int realtimeDelay = HRSConfig.CLIENT.realtimeDelay.get();
         boolean hidePlayer = HRSConfig.CLIENT.hidePlayer.get();
         CaptureMode mode = HRSConfig.CLIENT.captureMode.get();
 
@@ -57,13 +57,23 @@ public class HiResShotHandler {
 
         CaptureState state = new CaptureState(mc, tW, tH, hidePlayer);
 
+        int framesToPass = 0;
         switch (mode) {
-            case REAL_TIME -> currentMode = new RealTimeCaptureMode(mc, state);
-            case INSTANT -> currentMode = new InstantCaptureMode(mc, state);
-            case CPU_UPSCALE -> currentMode = new CpuUpscaleCaptureMode(mc, state);
+            case REAL_TIME -> {
+                currentMode = new RealTimeCaptureMode(mc, state);
+                framesToPass = realtimeDelay;
+            }
+            case INSTANT -> {
+                currentMode = new InstantCaptureMode(mc, state);
+                framesToPass = instantWarmup;
+            }
+            case CPU_UPSCALE -> {
+                currentMode = new CpuUpscaleCaptureMode(mc, state);
+                framesToPass = instantWarmup;
+            }
         }
 
-        currentMode.start(configWarmup);
+        currentMode.start(framesToPass);
     }
 
     @SubscribeEvent

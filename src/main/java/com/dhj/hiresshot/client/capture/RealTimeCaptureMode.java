@@ -1,11 +1,10 @@
 package com.dhj.hiresshot.client.capture;
 
-import com.dhj.hiresshot.mixin.WindowAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import com.dhj.hiresshot.mixin.WindowAccessor;
 
 public class RealTimeCaptureMode extends AbstractCaptureMode {
-
     private int framesToWait;
 
     public RealTimeCaptureMode(Minecraft mc, CaptureState state) {
@@ -13,11 +12,11 @@ public class RealTimeCaptureMode extends AbstractCaptureMode {
     }
 
     @Override
-    public void start(int warmupFrames) {
-        this.framesToWait = 1;
+    public void start(int delayFrames) {
+        this.framesToWait = Math.max(1, delayFrames);
         try {
             if (mc.player != null) {
-                mc.player.sendSystemMessage(Component.literal("§eCapturing..."));
+                mc.player.sendSystemMessage(Component.literal("§eCapturing... Waiting " + framesToWait + " frames."));
             }
             applyResolution();
         } catch (OutOfMemoryError e) {
@@ -52,9 +51,7 @@ public class RealTimeCaptureMode extends AbstractCaptureMode {
                 mc.player.sendSystemMessage(Component.literal("§cError: " + e.getMessage()));
             }
         } finally {
-            if (active) {
-                restoreState();
-            }
+            if (active) restoreState();
         }
     }
 }

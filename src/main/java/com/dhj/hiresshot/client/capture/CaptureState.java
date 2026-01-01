@@ -10,7 +10,6 @@ public class CaptureState {
 
     public int targetWidth;
     public int targetHeight;
-
     public boolean hidePlayer;
 
     public CaptureState(Minecraft mc, int tW, int tH, boolean hidePlayerConfig) {
