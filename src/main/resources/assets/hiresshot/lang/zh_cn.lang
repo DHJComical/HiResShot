@@ -1,30 +1,25 @@
-# 创造模式物品栏等其他翻译
 key.hiresshot.capture=高清截图 (F9)
 key.categories.hiresshot=HiResShot
 
-# 配置文件 GUI 翻译
-config.hiresshot.title=高清截图配置
+config.hiresshot.title=HiResShot 配置
 
 config.hiresshot.multiplier=截图倍数
-config.hiresshot.multiplier.tooltip=设置截图的分辨率倍数。\n例如: 4 代表长宽各放大 4 倍 (16 倍像素量)。\n范围: 2 - 32。
+config.hiresshot.multiplier.tooltip=设置截图的分辨率倍数。\n范围: 2 - 64。
 
 config.hiresshot.hide_gui=隐藏 GUI
-config.hiresshot.hide_gui.tooltip=截图时是否自动隐藏快捷栏、聊天框和准星。\n推荐开启以获得纯净画面。
-
-config.hiresshot.warmup_frames=预热帧数
-config.hiresshot.warmup_frames.tooltip=在保存截图前强制渲染的空帧数量。\n用于让光影的自动曝光适应高分辨率。\n如果截图发黑或曝光不足，请调大此数值 (推荐 10-20)。
-
-config.hiresshot.realtime_mode=实时渲染模式
-config.hiresshot.realtime_mode.tooltip=开启: 游戏在截图分辨率下继续运行几秒 (兼容光影)。\n关闭: 瞬间冻结画面并渲染 (速度快)。
-
-config.hiresshot.use_custom_res=使用自定义分辨率
-config.hiresshot.use_custom_res.tooltip=开启后，将忽略“截图倍数”，强制使用下方设置的宽度和高度。
-
-config.hiresshot.custom_width=自定义宽度 (px)
-config.hiresshot.custom_width.tooltip=目标截图的宽度像素值 (例如 4K 为 3840)。
-
-config.hiresshot.custom_height=自定义高度 (px)
-config.hiresshot.custom_height.tooltip=目标截图的高度像素值 (例如 4K 为 2160)。
+config.hiresshot.hide_gui.tooltip=截图时是否自动隐藏快捷栏、聊天框和准星。
 
 config.hiresshot.hide_player=隐藏玩家实体
-config.hiresshot.hide_player.tooltip=截图时完全不渲染玩家模型。\n这可以防止光影下出现自己的阴影，或者在第三人称时挡住画面。
+config.hiresshot.hide_player.tooltip=截图时完全不渲染玩家模型。
+
+config.hiresshot.warmup_frames=预热帧数
+config.hiresshot.warmup_frames.tooltip=在保存前强制渲染的帧数 (仅用于瞬间/CPU模式)。
+
+config.hiresshot.use_custom_res=使用自定义分辨率
+config.hiresshot.use_custom_res.tooltip=开启后，将忽略“截图倍数”。
+
+config.hiresshot.custom_width=自定义宽度
+config.hiresshot.custom_height=自定义高度
+
+config.hiresshot.capture_mode=截图模式
+config.hiresshot.capture_mode.tooltip=选择截图处理方式:\nREAL_TIME: 实时模式 (兼容光影)\nINSTANT: 瞬间模式 (速度快)\nCPU_UPSCALE: CPU放大 (突破显卡限制)

@@ -1,30 +1,25 @@
-# General
 key.hiresshot.capture=High-Res Capture
 key.categories.hiresshot=HiResShot
 
-# Config GUI
-config.hiresshot.title=HRS Config
+config.hiresshot.title=HiResShot Config
 
 config.hiresshot.multiplier=Multiplier
-config.hiresshot.multiplier.tooltip=The resolution scale factor.\nExample: 4 means 4x width and 4x height.\nRange: 2 - 32.
+config.hiresshot.multiplier.tooltip=Scale factor based on window size.\nRange: 2 - 64.
 
 config.hiresshot.hide_gui=Hide GUI
-config.hiresshot.hide_gui.tooltip=Whether to hide the HUD, chat, and crosshair during capture.\nRecommended: True.
+config.hiresshot.hide_gui.tooltip=Hide HUD and crosshair.
+
+config.hiresshot.hide_player=Hide Player
+config.hiresshot.hide_player.tooltip=Hide player model to avoid self-shadows.
 
 config.hiresshot.warmup_frames=Warm-up Frames
-config.hiresshot.warmup_frames.tooltip=Number of empty frames rendered before saving.\nAllows shaders to adjust auto-exposure.\nIncrease this if screenshots look dark (Recommended: 10-20).
+config.hiresshot.warmup_frames.tooltip=Frames to render before saving (Instant/CPU mode only).
 
-config.hiresshot.realtime_mode=Real-time Mode
-config.hiresshot.realtime_mode.tooltip=True: Game runs at high-res for a few seconds (Best for Shaders).\nFalse: Freezes game to render instantly (Faster).
+config.hiresshot.use_custom_res=Use Custom Res
+config.hiresshot.use_custom_res.tooltip=Override multiplier with custom width/height.
 
-config.hiresshot.use_custom_res=Use Custom Resolution
-config.hiresshot.use_custom_res.tooltip=If enabled, overrides the multiplier with the specific Width/Height below.
+config.hiresshot.custom_width=Custom Width
+config.hiresshot.custom_height=Custom Height
 
-config.hiresshot.custom_width=Custom Width (px)
-config.hiresshot.custom_width.tooltip=Target width in pixels (e.g., 3840).
-
-config.hiresshot.custom_height=Custom Height (px)
-config.hiresshot.custom_height.tooltip=Target height in pixels (e.g., 2160).
-
-config.hiresshot.hide_player=Hide Player Entity
-config.hiresshot.hide_player.tooltip=Prevents the player model from rendering.\nUseful to avoid self-shadows when using shaders.
+config.hiresshot.capture_mode=Capture Mode
+config.hiresshot.capture_mode.tooltip=REAL_TIME: Best for shaders.\nINSTANT: Fast.\nCPU_UPSCALE: Bypasses GPU limit.

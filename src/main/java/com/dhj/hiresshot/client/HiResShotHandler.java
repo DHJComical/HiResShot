@@ -1,10 +1,7 @@
 package com.dhj.hiresshot.client;
 
 import com.dhj.hiresshot.HRSConfig;
-import com.dhj.hiresshot.client.capture.AbstractCaptureMode;
-import com.dhj.hiresshot.client.capture.CaptureState;
-import com.dhj.hiresshot.client.capture.InstantCaptureMode;
-import com.dhj.hiresshot.client.capture.RealTimeCaptureMode;
+import com.dhj.hiresshot.client.capture.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.text.TextComponentString;
@@ -13,7 +10,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 public class HiResShotHandler {
@@ -49,8 +45,9 @@ public class HiResShotHandler {
         int scaleFactor = HRSConfig.multiplier;
         boolean useCustomRes = HRSConfig.useCustomResolution;
         int configWarmup = HRSConfig.warmupFrames;
-        boolean useRealTime = HRSConfig.realTimeMode;
         boolean hidePlayer = HRSConfig.hidePlayer;
+
+        CaptureMode mode = HRSConfig.captureMode;
 
         int currentWidth = mc.displayWidth;
         int currentHeight = mc.displayHeight;
@@ -65,20 +62,29 @@ public class HiResShotHandler {
         }
 
         int maxTexSize = GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE);
-        if (tW > maxTexSize || tH > maxTexSize) {
+        if (mode != CaptureMode.CPU_UPSCALE && (tW > maxTexSize || tH > maxTexSize)) {
             mc.player.sendMessage(new TextComponentString("§cError: Size " + tW + "x" + tH + " > GPU Max " + maxTexSize));
+            mc.player.sendMessage(new TextComponentString("§eTip: Switch to 'CPU_UPSCALE' mode in config to bypass this."));
             return;
         }
 
         CaptureState state = new CaptureState(mc, tW, tH, hidePlayer);
 
-        if (useRealTime) {
-            currentMode = new RealTimeCaptureMode(mc, state);
-        } else {
-            currentMode = new InstantCaptureMode(mc, state);
+        switch (mode) {
+            case REAL_TIME:
+                currentMode = new RealTimeCaptureMode(mc, state);
+                break;
+            case INSTANT:
+                currentMode = new InstantCaptureMode(mc, state);
+                break;
+            case CPU_UPSCALE:
+                currentMode = new CpuUpscaleCaptureMode(mc, state);
+                break;
         }
 
-        currentMode.start(configWarmup);
+        if (currentMode != null) {
+            currentMode.start(configWarmup);
+        }
     }
 
     @SubscribeEvent

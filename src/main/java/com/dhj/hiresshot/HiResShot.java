@@ -12,7 +12,7 @@ public class HiResShot {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         KeyHandler.register();
-        MinecraftForge.EVENT_BUS.register(new HiResShotHandler());
+        HiResShotHandler.register();
     }
 
 }

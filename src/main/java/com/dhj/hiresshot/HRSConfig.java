@@ -1,5 +1,6 @@
 package com.dhj.hiresshot;
 
+import com.dhj.hiresshot.client.capture.CaptureMode;
 import net.minecraftforge.common.config.Config;
 
 @Config(modid = Tags.MOD_ID)
@@ -7,38 +8,43 @@ import net.minecraftforge.common.config.Config;
 public class HRSConfig {
 
     @Config.LangKey("config.hiresshot.multiplier")
-    @Config.Comment("Resolution Multiplier (Range: 2-32)")
-    @Config.RangeInt(min = 2, max = 32)
+    @Config.Comment("Resolution Multiplier (Range: 2-64)")
+    @Config.RangeInt(min = 2, max = 64)
     public static int multiplier = 4;
 
     @Config.LangKey("config.hiresshot.hide_gui")
     @Config.Comment("Hide GUI during screenshot")
     public static boolean hideGUI = true;
 
-    @Config.LangKey("config.hiresshot.warmup_frames")
-    @Config.Comment("Warm-up frames to render before saving. Helps shaders stabilize exposure.")
-    @Config.RangeInt(min = 0, max = 100)
-    public static int warmupFrames = 10;
-
-    @Config.LangKey("config.hiresshot.realtime_mode")
-    @Config.Comment("True = Real-time (Wait in-game, Best for Shaders); False = Frozen (Instant, Faster)")
-    public static boolean realTimeMode = false;
-
-    @Config.LangKey("config.hiresshot.use_custom_res")
-    @Config.Comment("If True, uses the Custom Width/Height defined below instead of the Multiplier.")
-    public static boolean useCustomResolution = false;
-
-    @Config.LangKey("config.hiresshot.custom_width")
-    @Config.Comment("Custom Width in pixels (e.g., 3840 for 4K)")
-    @Config.RangeInt(min = 100, max = 32000)
-    public static int customWidth = 3840;
-
-    @Config.LangKey("config.hiresshot.custom_height")
-    @Config.Comment("Custom Height in pixels (e.g., 2160 for 4K)")
-    @Config.RangeInt(min = 100, max = 32000)
-    public static int customHeight = 2160;
-
     @Config.LangKey("config.hiresshot.hide_player")
     @Config.Comment("Hide player model to prevent self-shadows")
     public static boolean hidePlayer = true;
+
+    @Config.LangKey("config.hiresshot.warmup_frames")
+    @Config.Comment("Warm-up frames. Used for Instant Mode and CPU Mode.")
+    @Config.RangeInt(min = 0, max = 100)
+    public static int warmupFrames = 10;
+
+    @Config.LangKey("config.hiresshot.capture_mode")
+    @Config.Comment({
+            "Select Capture Mode:",
+            "REAL_TIME: Waits in-game, best for Shaders.",
+            "INSTANT: Freezes game, faster.",
+            "CPU_UPSCALE: Renders max GPU size then upscales with CPU."
+    })
+    public static CaptureMode captureMode = CaptureMode.REAL_TIME;
+
+    @Config.LangKey("config.hiresshot.use_custom_res")
+    @Config.Comment("Use Custom Resolution instead of Multiplier")
+    public static boolean useCustomResolution = false;
+
+    @Config.LangKey("config.hiresshot.custom_width")
+    @Config.Comment("Custom Width")
+    @Config.RangeInt(min = 100, max = 64000)
+    public static int customWidth = 3840;
+
+    @Config.LangKey("config.hiresshot.custom_height")
+    @Config.Comment("Custom Height")
+    @Config.RangeInt(min = 100, max = 64000)
+    public static int customHeight = 2160;
 }
