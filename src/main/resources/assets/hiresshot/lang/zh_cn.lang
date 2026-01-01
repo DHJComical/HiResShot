@@ -23,3 +23,9 @@ config.hiresshot.custom_height=自定义高度
 
 config.hiresshot.capture_mode=截图模式
 config.hiresshot.capture_mode.tooltip=选择截图处理方式:\nREAL_TIME: 实时模式 (兼容光影)\nINSTANT: 瞬间模式 (速度快)\nCPU_UPSCALE: CPU放大 (突破显卡限制)
+
+config.hiresshot.realtime_delay=实时模式延迟 (帧)
+config.hiresshot.realtime_delay.tooltip=在实时模式下，切换分辨率后等待多少帧再保存。\n给光影模组更多时间来适应新分辨率 (推荐 20-60)。
+
+config.hiresshot.cpu_upscale_limit_gpu=限制 GPU 渲染尺寸
+config.hiresshot.cpu_upscale_limit_gpu.tooltip=开启: 强制 GPU 最大渲染 16K，剩余倍数由 CPU 计算。\n关闭: 尝试使用 GPU 渲染全尺寸 (可能崩溃)。

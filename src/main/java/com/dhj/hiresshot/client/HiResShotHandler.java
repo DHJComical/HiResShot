@@ -44,9 +44,9 @@ public class HiResShotHandler {
 
         int scaleFactor = HRSConfig.multiplier;
         boolean useCustomRes = HRSConfig.useCustomResolution;
-        int configWarmup = HRSConfig.warmupFrames;
+        int instantWarmup = HRSConfig.warmupFrames;
+        int realtimeDelay = HRSConfig.realtimeDelay;
         boolean hidePlayer = HRSConfig.hidePlayer;
-
         CaptureMode mode = HRSConfig.captureMode;
 
         int currentWidth = mc.displayWidth;
@@ -64,26 +64,30 @@ public class HiResShotHandler {
         int maxTexSize = GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE);
         if (mode != CaptureMode.CPU_UPSCALE && (tW > maxTexSize || tH > maxTexSize)) {
             mc.player.sendMessage(new TextComponentString("§cError: Size " + tW + "x" + tH + " > GPU Max " + maxTexSize));
-            mc.player.sendMessage(new TextComponentString("§eTip: Switch to 'CPU_UPSCALE' mode in config to bypass this."));
+            mc.player.sendMessage(new TextComponentString("§eTip: Switch to 'CPU_UPSCALE' mode."));
             return;
         }
 
         CaptureState state = new CaptureState(mc, tW, tH, hidePlayer);
 
+        int framesToPass = 0;
         switch (mode) {
             case REAL_TIME:
                 currentMode = new RealTimeCaptureMode(mc, state);
+                framesToPass = realtimeDelay;
                 break;
             case INSTANT:
                 currentMode = new InstantCaptureMode(mc, state);
+                framesToPass = instantWarmup;
                 break;
             case CPU_UPSCALE:
                 currentMode = new CpuUpscaleCaptureMode(mc, state);
+                framesToPass = instantWarmup;
                 break;
         }
 
         if (currentMode != null) {
-            currentMode.start(configWarmup);
+            currentMode.start(framesToPass);
         }
     }
 

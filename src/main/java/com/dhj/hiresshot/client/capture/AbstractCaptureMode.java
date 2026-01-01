@@ -20,7 +20,6 @@ public abstract class AbstractCaptureMode {
     protected static final Logger LOGGER = LogManager.getLogger("HiResShot");
     protected final Minecraft mc;
     protected final CaptureState state;
-
     protected boolean active = true;
 
     public AbstractCaptureMode(Minecraft mc, CaptureState state) {
@@ -28,16 +27,11 @@ public abstract class AbstractCaptureMode {
         this.state = state;
     }
 
-    public abstract void start(int warmupFrames);
+    public abstract void start(int frames);
     public abstract void onRenderTick();
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public boolean shouldHidePlayer() {
-        return active && state.hidePlayer;
-    }
+    public boolean isActive() { return active; }
+    public boolean shouldHidePlayer() { return active && state.hidePlayer; }
 
     protected void applyResolution() {
         resize(state.targetWidth, state.targetHeight);
@@ -53,6 +47,7 @@ public abstract class AbstractCaptureMode {
         resize(state.originalWidth, state.originalHeight);
 
         GlStateManager.viewport(0, 0, state.originalWidth, state.originalHeight);
+
         if (OpenGlHelper.isFramebufferEnabled()) {
             mc.getFramebuffer().bindFramebuffer(true);
         }
@@ -61,6 +56,8 @@ public abstract class AbstractCaptureMode {
         GlStateManager.enableDepth();
         GlStateManager.enableAlpha();
         GlStateManager.enableBlend();
+
+        mc.entityRenderer.onResourceManagerReload(mc.getResourceManager());
 
         if (HRSConfig.hideGUI) {
             mc.gameSettings.hideGUI = state.originalHideGui;
@@ -99,8 +96,7 @@ public abstract class AbstractCaptureMode {
             String customFileName = dateStr + "_hrs.png";
 
             ITextComponent msg = ScreenShotHelper.saveScreenshot(gameDir, customFileName, state.targetWidth, state.targetHeight, mc.getFramebuffer());
-
-            LOGGER.info("Saved: " + customFileName);
+            LOGGER.info("Saved: {}", customFileName);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

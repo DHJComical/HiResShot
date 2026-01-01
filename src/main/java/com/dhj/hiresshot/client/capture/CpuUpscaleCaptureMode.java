@@ -17,7 +17,6 @@ import java.util.Date;
 public class CpuUpscaleCaptureMode extends AbstractCaptureMode {
 
     private static final int SAFE_MAX_GPU_SIZE = 16384;
-
     private int renderWidth;
     private int renderHeight;
 
@@ -30,12 +29,15 @@ public class CpuUpscaleCaptureMode extends AbstractCaptureMode {
         try {
             int hardwareLimit = GL11.glGetInteger(GL11.GL_MAX_TEXTURE_SIZE);
 
-            int limit = Math.min(hardwareLimit - 100, SAFE_MAX_GPU_SIZE);
+            int limit = hardwareLimit - 100;
+            if (HRSConfig.cpuUpscaleLimitGpu) {
+                limit = Math.min(limit, SAFE_MAX_GPU_SIZE);
+            }
 
             double tW = state.targetWidth;
             double tH = state.targetHeight;
-
             double scale = 1.0;
+
             if (tW > limit || tH > limit) {
                 double scaleW = (double) limit / tW;
                 double scaleH = (double) limit / tH;
@@ -93,10 +95,8 @@ public class CpuUpscaleCaptureMode extends AbstractCaptureMode {
             if (!screenshotsDir.exists()) screenshotsDir.mkdirs();
 
             String dateStr = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date());
-
             String rawFileName = dateStr + "_raw.png";
             File rawFile = new File(screenshotsDir, rawFileName);
-
             String finalFileName = dateStr + "_hrs_upscaled.png";
             File finalFile = new File(screenshotsDir, finalFileName);
 
@@ -110,10 +110,7 @@ public class CpuUpscaleCaptureMode extends AbstractCaptureMode {
                         retries++;
                     }
 
-                    if (!rawFile.exists()) {
-                        LOGGER.error("Raw file missing: " + rawFile.getAbsolutePath());
-                        return;
-                    }
+                    if (!rawFile.exists()) return;
 
                     if (renderWidth == state.targetWidth && renderHeight == state.targetHeight) {
                         if (rawFile.renameTo(finalFile)) {
@@ -123,8 +120,6 @@ public class CpuUpscaleCaptureMode extends AbstractCaptureMode {
                             return;
                         }
                     }
-
-                    LOGGER.info("Starting CPU Upscaling...");
 
                     BufferedImage bufImg = ImageIO.read(rawFile);
 
@@ -137,12 +132,9 @@ public class CpuUpscaleCaptureMode extends AbstractCaptureMode {
                     );
 
                     BufferedImage finalImg = ato.filter(bufImg, null);
-
                     ImageIO.write(finalImg, "png", finalFile);
 
-                    if (rawFile.exists()) {
-                        rawFile.delete();
-                    }
+                    if (rawFile.exists()) rawFile.delete();
 
                     mc.addScheduledTask(() ->
                             mc.player.sendMessage(new TextComponentString("§aUpscaling Finished: " + finalFileName))

@@ -25,6 +25,11 @@ public class HRSConfig {
     @Config.RangeInt(min = 0, max = 100)
     public static int warmupFrames = 10;
 
+    @Config.LangKey("config.hiresshot.realtime_delay")
+    @Config.Comment("Frames to wait in Real-time Mode (Allows shaders to stabilize). Recommended: 20-60.")
+    @Config.RangeInt(min = 1, max = 600)
+    public static int realtimeDelay = 20;
+
     @Config.LangKey("config.hiresshot.capture_mode")
     @Config.Comment({
             "Select Capture Mode:",
@@ -47,4 +52,8 @@ public class HRSConfig {
     @Config.Comment("Custom Height")
     @Config.RangeInt(min = 100, max = 64000)
     public static int customHeight = 2160;
+
+    @Config.LangKey("config.hiresshot.cpu_upscale_limit_gpu")
+    @Config.Comment("Limit GPU render size to 16K in CPU mode to prevent crashes.")
+    public static boolean cpuUpscaleLimitGpu = true;
 }

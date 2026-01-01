@@ -23,3 +23,9 @@ config.hiresshot.custom_height=Custom Height
 
 config.hiresshot.capture_mode=Capture Mode
 config.hiresshot.capture_mode.tooltip=REAL_TIME: Best for shaders.\nINSTANT: Fast.\nCPU_UPSCALE: Bypasses GPU limit.
+
+config.hiresshot.cpu_upscale_limit_gpu=Limit GPU Render Size
+config.hiresshot.cpu_upscale_limit_gpu.tooltip=Only used in CPU Upscale Mode.\nTrue: Limits GPU rendering to 16K (16384px) to save VRAM. CPU handles the rest.\nFalse: Tries to render full size on GPU (Risky if > 16K).
+
+config.hiresshot.realtime_delay=Real-time Delay (Frames)
+config.hiresshot.realtime_delay.tooltip=Frames to wait in Real-time Mode before saving.\nAllows shaders (Auto-Exposure/TAA) to stabilize.\nRecommended: 20-60.
