@@ -1,6 +1,6 @@
 # HiResShot
 
-![Logo](src/main/resources/assets/hiresshot/icon.png)
+![Logo](docs/icon.png)
 
 **HiResShot** 是一个 Minecraft 截图增强模组，允许玩家截取远超当前屏幕分辨率的图片（如 4K、8K 甚至更高）。
 
