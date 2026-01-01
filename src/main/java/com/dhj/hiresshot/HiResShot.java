@@ -1,6 +1,8 @@
 package com.dhj.hiresshot;
 
+import com.dhj.hiresshot.client.HiResShotHandler;
 import com.dhj.hiresshot.client.KeyHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -10,6 +12,7 @@ public class HiResShot {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         KeyHandler.register();
+        MinecraftForge.EVENT_BUS.register(new HiResShotHandler());
     }
 
 }
