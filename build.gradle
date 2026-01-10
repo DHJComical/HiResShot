@@ -36,11 +36,25 @@ dependencies {
     mappings loom.officialMojangMappings()
     forge "net.minecraftforge:forge:1.18.2-40.3.12"
     modImplementation "me.shedaniel.cloth:cloth-config-forge:6.5.102"
+    modImplementation "curse.maven:oculus-581495:4578744"
+    modImplementation "curse.maven:embeddium-908741:5322305"
 }
 
 processResources {
     inputs.property "version", project.version
+
     filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
+        expand(
+                "version": project.version,
+                "loader_version_range": "[40,)",
+                "forge_version_range": "[40,)",
+                "minecraft_version_range": "[1.18.2,1.19)",
+                "mod_version": mod_version,
+                "mod_id": mod_id,
+                "mod_name": mod_name,
+                "mod_license": mod_license,
+                "mod_authors": mod_authors,
+                "mod_description": mod_description
+        )
     }
 }
