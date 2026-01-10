@@ -43,7 +43,7 @@ version = propertyString('mod_version')
 group = propertyString('root_package')
 
 base {
-    archivesName.set(archivesName = "${mod_id}-Forge-1.12.2")
+    archivesName.set(archivesName = "${mod_name}-Forge-1.12.2")
 }
 
 tasks.decompressDecompiledSources.enabled !propertyBool('change_minecraft_sources')
