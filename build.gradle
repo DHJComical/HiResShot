@@ -5,7 +5,7 @@ plugins {
 
 version = project.mod_version
 group = project.mod_group_id
-archivesBaseName = "${project.mod_name}-1.19.2"
+archivesBaseName = "${project.mod_name}-Forge-1.19.2"
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -41,6 +41,8 @@ dependencies {
     mappings loom.officialMojangMappings()
     forge "net.minecraftforge:forge:${project.forge_version}"
     modImplementation "me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}"
+    modImplementation "curse.maven:embeddium-908741:5539178"
+    modImplementation "curse.maven:oculus-581495:6020961"
 }
 
 processResources {
