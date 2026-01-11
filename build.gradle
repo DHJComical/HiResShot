@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'dev.architectury.loom' version '1.7-SNAPSHOT'
+}
+
+version = project.mod_version
+group = project.mod_group_id
+archivesBaseName = "${project.mod_name}-1.19.2"
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+loom {
+    forge {
+        mixinConfig "hiresshot.mixins.json"
+    }
+
+    runs {
+        client {
+            client()
+            ideConfigGenerated = true
+            runDir "run"
+        }
+        server {
+            server()
+            ideConfigGenerated = true
+            runDir "run"
+        }
+    }
+}
+
+repositories {
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://cursemaven.com" }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    forge "net.minecraftforge:forge:${project.forge_version}"
+    modImplementation "me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}

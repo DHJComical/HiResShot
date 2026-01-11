@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.architectury.dev/" }
+        maven { url "https://maven.minecraftforge.net/" }
+        maven { url "https://maven.fabricmc.net/" }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'HiResShot-1.19.2'
