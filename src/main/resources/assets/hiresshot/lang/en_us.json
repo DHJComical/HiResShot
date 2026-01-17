@@ -1,0 +1,39 @@
+{
+  "key.categories.hiresshot": "HiResShot",
+  "key.hiresshot.capture": "Capture High-Res Image",
+
+  "config.hiresshot.title": "HiResShot Config",
+
+  "config.hiresshot.multiplier": "Multiplier",
+  "config.hiresshot.multiplier.tooltip": "Scale factor based on window size.\nRange: 2 - 64.\n(Only used when 'Use Custom Resolution' is OFF)",
+
+  "config.hiresshot.hideGui": "Hide GUI",
+  "config.hiresshot.hideGui.tooltip": "Whether to hide HUD, chat, and crosshair during capture.",
+
+  "config.hiresshot.hidePlayer": "Hide Player Entity",
+  "config.hiresshot.hidePlayer.tooltip": "Prevents the player model from rendering.\nUseful to avoid self-shadows when using shaders.",
+
+  "config.hiresshot.warmupFrames": "Instant Warm-up Frames",
+  "config.hiresshot.warmupFrames.tooltip": "Frames to render before saving (Instant/CPU mode).",
+
+  "config.hiresshot.realtimeDelay": "Real-time Delay (Frames)",
+  "config.hiresshot.realtimeDelay.tooltip": "Frames to wait in-game before saving.\nAllows shaders to stabilize (Rec: 20-60).",
+
+  "config.hiresshot.captureMode": "Capture Mode",
+  "config.hiresshot.captureMode.tooltip": "Select how the screenshot is processed.",
+  "config.hiresshot.captureMode.REAL_TIME": "Real-Time (Best for Shaders)",
+  "config.hiresshot.captureMode.INSTANT": "Instant (Fast)",
+  "config.hiresshot.captureMode.CPU_UPSCALE": "CPU Upscale (Limitless)",
+
+  "config.hiresshot.useCustomResolution": "Use Custom Resolution",
+  "config.hiresshot.useCustomResolution.tooltip": "If enabled, overrides the multiplier with the specific Width/Height below.",
+
+  "config.hiresshot.customWidth": "Custom Width (px)",
+  "config.hiresshot.customWidth.tooltip": "Target width in pixels (e.g., 3840 for 4K).",
+
+  "config.hiresshot.customHeight": "Custom Height (px)",
+  "config.hiresshot.customHeight.tooltip": "Target height in pixels (e.g., 2160 for 4K).",
+
+  "config.hiresshot.cpuUpscaleLimitGpu": "Limit GPU Render Size",
+  "config.hiresshot.cpuUpscaleLimitGpu.tooltip": "Only used in CPU Upscale Mode.\nTrue: Limits GPU rendering to 16K (16384px) to save VRAM. CPU handles the rest.\nFalse: Tries to render full size on GPU (Risky if > 16K)."
+}
